@@ -1,4 +1,9 @@
-import { IconForms, IconPencil, IconTrash } from "@tabler/icons-react";
+import {
+  IconFileText,
+  IconPencil,
+  IconTextPlus,
+  IconTrash,
+} from "@tabler/icons-react";
 import {
   ActionIcon,
   Badge,
@@ -8,6 +13,7 @@ import {
   Text,
   Title,
 } from "@mantine/core";
+import { Link } from "react-router-dom";
 
 const data = [
   {
@@ -48,7 +54,7 @@ export default function Templates() {
       <Table.Td>
         <Group gap={0} justify="flex-end">
           <ActionIcon variant="subtle" color="gray">
-            <IconForms size={16} stroke={1.5} />
+            <IconFileText size={16} stroke={1.5} />
           </ActionIcon>
           <ActionIcon variant="subtle" color="gray">
             <IconPencil size={16} stroke={1.5} />
@@ -63,9 +69,17 @@ export default function Templates() {
 
   return (
     <Container size="md">
-      <Title mt={-60} mb={30}>
-        Templates
-      </Title>
+      <Group mt={-60} mb={30}>
+        <Title>Templates</Title>
+        <ActionIcon
+          component={Link}
+          to="/add-template"
+          variant="subtle"
+          color="yellow"
+        >
+          <IconTextPlus size={80} stroke={1.5} />
+        </ActionIcon>
+      </Group>
       <Table.ScrollContainer minWidth={800}>
         <Table verticalSpacing="sm">
           <Table.Thead>
