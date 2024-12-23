@@ -1,5 +1,3 @@
-# Mantine Vite template
+# Wick
 
-Get started with the template by clicking `Use this template` button on the top of the page.
-
-[Documentation](https://mantine.dev/guides/vite/)
+A quick content generation framework for repeativive tasks.
