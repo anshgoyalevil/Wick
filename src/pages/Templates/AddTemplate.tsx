@@ -33,6 +33,8 @@ function AddTemplate() {
       newTemplate.variables = extractVariables.map((variable) =>
         variable.replace(/[{}]/g, "")
       );
+
+      newTemplate.variables = Array.from(new Set(newTemplate.variables));
     }
 
     addTemplate(newTemplate);

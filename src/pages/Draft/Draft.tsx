@@ -1,18 +1,21 @@
 import { useParams } from "react-router-dom";
 import { getTemplate } from "../../db/db";
 import {
+  Button,
   Container,
   Grid,
+  Group,
   Paper,
   SimpleGrid,
   TextInput,
   Title,
 } from "@mantine/core";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { ITemplate } from "../../db/schema";
 
 function Draft() {
   const { id } = useParams();
+  const contentRef = useRef<HTMLDivElement>(null);
 
   const [template, setTemplate] = useState<ITemplate | null>(null);
   const [fieldValues, setFieldValues] = useState<{ [key: string]: string }>({});
@@ -34,14 +37,31 @@ function Draft() {
   }, [id]);
 
   const renderedContent = template
-    ? template.content.replace(
-        /{{(.*?)}}/g,
-        (_, variable) =>
-          `<span style="color: ${fieldValues[variable] ? "green" : "green"};">${
-            fieldValues[variable] || `{{${variable}}}`
-          }</span>`
-      )
+    ? template.content.replace(/{{(.*?)}}/g, (_, variable) => {
+        const value = fieldValues[variable] || `{{${variable}}}`;
+        return `<span style="color: ${
+          fieldValues[variable] ? "green" : "green"
+        };">${value}</span>`;
+      })
     : "";
+
+  const handleCopyContent = () => {
+    if (contentRef.current) {
+      const range = document.createRange();
+      range.selectNode(contentRef.current);
+      const selection = window.getSelection();
+      if (selection) {
+        selection.removeAllRanges();
+        selection.addRange(range);
+      }
+      try {
+        document.execCommand("copy");
+      } catch (err) {
+        console.error("Failed to copy content: ", err);
+      }
+      selection?.removeAllRanges();
+    }
+  };
 
   if (!template) {
     return (
@@ -54,13 +74,17 @@ function Draft() {
   }
 
   return (
-    <Container>
-      <Title mt={-60} mb={30}>
-        {template.title}
-      </Title>
+    <Container size="lg">
+      <Group mt={-80} mb={30}>
+        <Title size="xl">{template.title}</Title>
+        <Button variant="light" onClick={handleCopyContent}>
+          Copy Content
+        </Button>
+      </Group>
       <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md">
-        <Paper shadow="sm" withBorder px={20}>
+        <Paper shadow="sm" withBorder px={20} mb={60}>
           <div
+            ref={contentRef}
             dangerouslySetInnerHTML={{
               __html: renderedContent,
             }}
@@ -69,7 +93,7 @@ function Draft() {
         <Grid gutter="md">
           <Grid.Col>
             <Paper shadow="sm" px={20}>
-              {template.variables.map((variable) => (
+              {Object.keys(fieldValues).map((variable) => (
                 <TextInput
                   mb={20}
                   key={variable}
