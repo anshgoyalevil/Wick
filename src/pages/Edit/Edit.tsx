@@ -2,8 +2,7 @@ import { Button, Container, TextInput, Title } from "@mantine/core";
 import Editor from "../../components/editor/Editor";
 import { useEffect, useState } from "react";
 import { useForm } from "@mantine/form";
-import { v4 as uuidv4 } from "uuid";
-import { addTemplate, getTemplate } from "../../db/db";
+import { getTemplate, updateTemplate } from "../../db/db";
 import { ITemplate } from "../../db/schema";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -25,11 +24,11 @@ function Edit() {
       setTemplateContent(template.content);
       form.setValues({ title: template.title });
     }
-  }, []);
+  }, [id]);
 
-  const handleSubmit = (formValue: any) => {
-    const newTemplate: ITemplate = {
-      id: uuidv4(),
+  const handleUpdate = (formValue: any) => {
+    const updatedTemplate: ITemplate = {
+      id: id!,
       title: formValue.title,
       content: templateContent,
       variables: [] as string[],
@@ -39,14 +38,16 @@ function Edit() {
     const extractVariables = templateContent.match(/{{(.*?)}}/g);
 
     if (extractVariables) {
-      newTemplate.variables = extractVariables.map((variable) =>
+      updatedTemplate.variables = extractVariables.map((variable) =>
         variable.replace(/[{}]/g, "")
       );
 
-      newTemplate.variables = Array.from(new Set(newTemplate.variables));
+      updatedTemplate.variables = Array.from(
+        new Set(updatedTemplate.variables)
+      );
     }
 
-    addTemplate(newTemplate);
+    updateTemplate(id!, updatedTemplate);
 
     navigate("/templates");
   };
@@ -56,7 +57,7 @@ function Edit() {
       <Title mt={-60} mb={30}>
         Edit Template
       </Title>
-      <form onSubmit={form.onSubmit(handleSubmit)} autoComplete="off">
+      <form onSubmit={form.onSubmit(handleUpdate)} autoComplete="off">
         <TextInput
           mt="md"
           mb="md"
@@ -68,7 +69,7 @@ function Edit() {
           content={templateContent}
           setTemplateContent={setTemplateContent}
         />
-        <Button mt={20} type="submit" variant="light" fullWidth>
+        <Button mb={100} mt={20} type="submit" variant="light" fullWidth>
           Save
         </Button>
       </form>

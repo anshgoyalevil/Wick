@@ -59,7 +59,7 @@ function AddTemplate() {
           content={templateContent}
           setTemplateContent={setTemplateContent}
         />
-        <Button mt={20} type="submit" variant="light" fullWidth>
+        <Button mb={100} mt={20} type="submit" variant="light" fullWidth>
           Save
         </Button>
       </form>

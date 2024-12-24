@@ -8,6 +8,7 @@ import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 import TextAlign from "@tiptap/extension-text-align";
 import { IconVariable } from "@tabler/icons-react";
+import { useEffect } from "react";
 
 export default function AddTemplate({ content, setTemplateContent }: any) {
   function InsertVariable() {
@@ -35,6 +36,12 @@ export default function AddTemplate({ content, setTemplateContent }: any) {
       setTemplateContent(editor.getHTML());
     },
   });
+
+  useEffect(() => {
+    if (editor && content !== editor.getHTML()) {
+      editor.commands.setContent(content);
+    }
+  }, [content, editor]);
 
   return (
     <RichTextEditor editor={editor}>
