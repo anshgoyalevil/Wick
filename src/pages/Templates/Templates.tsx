@@ -7,11 +7,13 @@ import {
 import {
   ActionIcon,
   Badge,
+  Button,
   Container,
   Group,
   Table,
   Text,
   Title,
+  Tooltip,
 } from "@mantine/core";
 import { Link } from "react-router-dom";
 import { ITemplate } from "../../db/schema";
@@ -57,29 +59,35 @@ export default function Templates() {
       </Table.Td>
       <Table.Td>
         <Group gap={0} justify="flex-end">
-          <ActionIcon
-            component={Link}
-            to={`/draft/${item.id}`}
-            variant="subtle"
-            color="gray"
-          >
-            <IconFileText size={16} stroke={1.5} />
-          </ActionIcon>
-          <ActionIcon
-            component={Link}
-            to={`/edit/${item.id}`}
-            variant="subtle"
-            color="gray"
-          >
-            <IconPencil size={16} stroke={1.5} />
-          </ActionIcon>
-          <ActionIcon
-            onClick={() => handleDelete(item.id)}
-            variant="subtle"
-            color="red"
-          >
-            <IconTrash size={16} stroke={1.5} />
-          </ActionIcon>
+          <Tooltip label="Create message">
+            <ActionIcon
+              component={Link}
+              to={`/draft/${item.id}`}
+              variant="subtle"
+              color="gray"
+            >
+              <IconFileText size={16} stroke={1.5} />
+            </ActionIcon>
+          </Tooltip>
+          <Tooltip label="Edit template">
+            <ActionIcon
+              component={Link}
+              to={`/edit/${item.id}`}
+              variant="subtle"
+              color="gray"
+            >
+              <IconPencil size={16} stroke={1.5} />
+            </ActionIcon>
+          </Tooltip>
+          <Tooltip label="Delete template">
+            <ActionIcon
+              onClick={() => handleDelete(item.id)}
+              variant="subtle"
+              color="red"
+            >
+              <IconTrash size={16} stroke={1.5} />
+            </ActionIcon>
+          </Tooltip>
         </Group>
       </Table.Td>
     </Table.Tr>
@@ -89,13 +97,16 @@ export default function Templates() {
     <Container size="md">
       <Group mt={-60} mb={30}>
         <Title>Templates</Title>
-        <ActionIcon
-          component={Link}
-          to="/add-template"
-          variant="subtle"
-        >
-          <IconTextPlus size={80} stroke={1.5} />
-        </ActionIcon>
+        <Tooltip label="Add new template">
+          <Button
+            component={Link}
+            to="/add-template"
+            rightSection={<IconTextPlus size={20} stroke={1.5} />}
+            variant="light"
+          >
+            Add
+          </Button>
+        </Tooltip>
       </Group>
       <Table.ScrollContainer minWidth={800}>
         <Table verticalSpacing="sm">
