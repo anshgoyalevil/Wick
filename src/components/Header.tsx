@@ -1,11 +1,4 @@
-import {
-  Box,
-  Burger,
-  Divider,
-  Drawer,
-  Group,
-  ScrollArea,
-} from "@mantine/core";
+import { Box, Burger, Divider, Drawer, Group, ScrollArea } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import classes from "./Header.module.css";
 import { Link } from "react-router-dom";
@@ -21,7 +14,7 @@ export default function Header() {
   ];
 
   const items = links.map((link) => (
-    <Link to={link.to} className={classes.link}>
+    <Link key={link.to} to={link.to} className={classes.link}>
       {link.title}
     </Link>
   ));
