@@ -7,6 +7,7 @@ import Header from "./components/Header";
 import Templates from "./pages/Templates/Templates";
 import AddTemplate from "./pages/Templates/AddTemplate";
 import Draft from "./pages/Draft/Draft";
+import Edit from "./pages/Edit/Edit";
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
         <Route path="/templates" element={<Templates />} />
         <Route path="/add-template" element={<AddTemplate />} />
         <Route path="/draft/:id" element={<Draft />} />
+        <Route path="/edit/:id" element={<Edit />} />
       </Routes>
     </MantineProvider>
   );

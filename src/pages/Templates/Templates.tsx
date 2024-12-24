@@ -65,7 +65,12 @@ export default function Templates() {
           >
             <IconFileText size={16} stroke={1.5} />
           </ActionIcon>
-          <ActionIcon variant="subtle" color="gray">
+          <ActionIcon
+            component={Link}
+            to={`/edit/${item.id}`}
+            variant="subtle"
+            color="gray"
+          >
             <IconPencil size={16} stroke={1.5} />
           </ActionIcon>
           <ActionIcon
