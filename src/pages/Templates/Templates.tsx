@@ -14,22 +14,24 @@ import {
   Title,
 } from "@mantine/core";
 import { Link } from "react-router-dom";
-
-const data = [
-  {
-    title: "LinkedIn Referral Message Template",
-    variableCount: 3,
-    dateCreated: "2021-01-01",
-  },
-];
+import { ITemplate } from "../../db/schema";
+import { useEffect, useState } from "react";
+import { getTemplates } from "../../db/db";
 
 const jobColors: Record<string, string> = {
-  engineer: "blue",
-  manager: "cyan",
-  designer: "pink",
+  yesterday: "blue",
+  today: "green",
+  tomorrow: "red",
 };
 
 export default function Templates() {
+  const [data, setData] = useState<ITemplate[]>([]);
+
+  useEffect(() => {
+    const templates = getTemplates();
+    setData(templates);
+  }, []);
+
   const rows = data.map((item) => (
     <Table.Tr key={item.title}>
       <Table.Td>
@@ -41,15 +43,12 @@ export default function Templates() {
       </Table.Td>
 
       <Table.Td>
-        <Badge
-          color={jobColors[item.dateCreated.toLowerCase()]}
-          variant="light"
-        >
+        <Badge color={jobColors[item.dateCreated]} variant="light">
           {item.dateCreated}
         </Badge>
       </Table.Td>
       <Table.Td>
-        <Text fz="sm">{item.variableCount}</Text>
+        <Text fz="sm">{item.variables.length}</Text>
       </Table.Td>
       <Table.Td>
         <Group gap={0} justify="flex-end">

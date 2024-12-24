@@ -14,16 +14,16 @@ export const addTemplate = (template: ITemplate) => {
   return templates;
 };
 
-export const updateTemplate = (id, updatedTemplate) => {
+export const updateTemplate = (id: string, updatedTemplate: ITemplate) => {
   const templates = getTemplates();
-  const index = templates.findIndex((item) => item.id === id);
+  const index = templates.findIndex((item: ITemplate) => item.id === id);
   if (index !== -1) {
     templates[index] = { ...templates[index], ...updatedTemplate };
     localStorage.setItem(storageKey, JSON.stringify(templates));
   }
 };
 
-export const deleteTemplate = (id) => {
-  const templates = getTemplates().filter((item) => item.id !== id);
+export const deleteTemplate = (id: string) => {
+  const templates = getTemplates().filter((item: ITemplate) => item.id !== id);
   localStorage.setItem(storageKey, JSON.stringify(templates));
 };

@@ -2,6 +2,7 @@ import { Box, Burger, Divider, Drawer, Group, ScrollArea } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import classes from "./Header.module.css";
 import { Link } from "react-router-dom";
+import ColorSchemeToggle from "./ColorSchemeToggle/ColorSchemeToggle";
 
 export default function Header() {
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
@@ -25,7 +26,9 @@ export default function Header() {
         <Group justify="space-between" h="100%">
           <Group h="100%" gap={0} visibleFrom="sm">
             {items}
+
           </Group>
+            <ColorSchemeToggle />
 
           <Burger
             opened={drawerOpened}
@@ -47,6 +50,7 @@ export default function Header() {
         <ScrollArea h="calc(100vh - 80px" mx="-md">
           <Divider my="sm" />
           {items}
+
         </ScrollArea>
       </Drawer>
     </Box>

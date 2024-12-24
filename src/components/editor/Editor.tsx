@@ -1,10 +1,28 @@
-import { RichTextEditor, Link } from "@mantine/tiptap";
+import {
+  RichTextEditor,
+  Link,
+  useRichTextEditorContext,
+} from "@mantine/tiptap";
 import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 import TextAlign from "@tiptap/extension-text-align";
+import { IconVariable } from "@tabler/icons-react";
 
 export default function AddTemplate({ content, setTemplateContent }: any) {
+  function InsertVariable() {
+    const { editor } = useRichTextEditorContext();
+    return (
+      <RichTextEditor.Control
+        onClick={() => editor?.commands.insertContent("{{variable}}")}
+        aria-label="Insert variable"
+        title="Insert variable"
+      >
+        <IconVariable stroke={1.5} size="1rem" />
+      </RichTextEditor.Control>
+    );
+  }
+
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -62,6 +80,10 @@ export default function AddTemplate({ content, setTemplateContent }: any) {
         <RichTextEditor.ControlsGroup>
           <RichTextEditor.Undo />
           <RichTextEditor.Redo />
+        </RichTextEditor.ControlsGroup>
+
+        <RichTextEditor.ControlsGroup>
+          <InsertVariable />
         </RichTextEditor.ControlsGroup>
       </RichTextEditor.Toolbar>
 

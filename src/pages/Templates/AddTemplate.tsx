@@ -1,13 +1,38 @@
-import { Button, Container, Title } from "@mantine/core";
+import { Button, Container, TextInput, Title } from "@mantine/core";
 import Editor from "../../components/editor/Editor";
 import { useState } from "react";
+import { useForm } from "@mantine/form";
+import { v4 as uuidv4 } from "uuid";
+import { addTemplate } from "../../db/db";
+import { ITemplate } from "../../db/schema";
 
 function AddTemplate() {
   const [templateContent, setTemplateContent] = useState("");
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    console.log(templateContent);
+  const form = useForm({
+    initialValues: {
+      title: "",
+    },
+  });
+
+  const handleSubmit = (formValue: any) => {
+    const newTemplate: ITemplate = {
+      id: uuidv4(),
+      title: formValue.title,
+      content: templateContent,
+      variables: [] as string[],
+      dateCreated: new Date().toLocaleDateString(),
+    };
+
+    const extractVariables = templateContent.match(/{{(.*?)}}/g);
+
+    if (extractVariables) {
+      newTemplate.variables = extractVariables.map((variable) =>
+        variable.replace(/[{}]/g, "")
+      );
+    }
+
+    addTemplate(newTemplate);
   };
 
   return (
@@ -15,7 +40,14 @@ function AddTemplate() {
       <Title mt={-60} mb={30}>
         Add Template
       </Title>
-      <form onSubmit={handleSubmit} autoComplete="off">
+      <form onSubmit={form.onSubmit(handleSubmit)} autoComplete="off">
+        <TextInput
+          mt="md"
+          mb="md"
+          placeholder="A nice name for your template"
+          required
+          {...form.getInputProps("title")}
+        />
         <Editor
           content={templateContent}
           setTemplateContent={setTemplateContent}

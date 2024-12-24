@@ -3,4 +3,5 @@ export interface ITemplate {
   title: string;
   content: string;
   variables: string[];
+  dateCreated: string;
 }
