@@ -16,7 +16,7 @@ import {
 import { Link } from "react-router-dom";
 import { ITemplate } from "../../db/schema";
 import { useEffect, useState } from "react";
-import { getTemplates } from "../../db/db";
+import { deleteTemplate, getTemplates } from "../../db/db";
 
 const jobColors: Record<string, string> = {
   yesterday: "blue",
@@ -31,6 +31,11 @@ export default function Templates() {
     const templates = getTemplates();
     setData(templates);
   }, []);
+
+  const handleDelete = (id: string) => {
+    deleteTemplate(id);
+    setData(getTemplates());
+  };
 
   const rows = data.map((item) => (
     <Table.Tr key={item.title}>
@@ -63,7 +68,11 @@ export default function Templates() {
           <ActionIcon variant="subtle" color="gray">
             <IconPencil size={16} stroke={1.5} />
           </ActionIcon>
-          <ActionIcon variant="subtle" color="red">
+          <ActionIcon
+            onClick={() => handleDelete(item.id)}
+            variant="subtle"
+            color="red"
+          >
             <IconTrash size={16} stroke={1.5} />
           </ActionIcon>
         </Group>
