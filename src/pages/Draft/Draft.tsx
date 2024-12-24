@@ -12,6 +12,8 @@ import {
 } from "@mantine/core";
 import { useEffect, useState, useRef } from "react";
 import { ITemplate } from "../../db/schema";
+import TurndownService from "turndown";
+const htmlToMarkdown = new TurndownService();
 
 function Draft() {
   const { id } = useParams();
@@ -63,6 +65,13 @@ function Draft() {
     }
   };
 
+  const handleTranslate = () => {
+    if (contentRef.current) {
+      const markdown = htmlToMarkdown.turndown(contentRef.current.innerHTML);
+      navigator.clipboard.writeText(markdown);
+    }
+  };
+
   if (!template) {
     return (
       <Container>
@@ -79,6 +88,9 @@ function Draft() {
         <Title size="xl">{template.title}</Title>
         <Button variant="light" onClick={handleCopyContent}>
           Copy Content
+        </Button>
+        <Button variant="light" onClick={handleTranslate}>
+          Copy Markdown
         </Button>
       </Group>
       <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md">
