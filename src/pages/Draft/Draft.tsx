@@ -33,11 +33,13 @@ function Draft() {
     }
   }, [id]);
 
-  // Generate the rendered content by replacing placeholders with field values
   const renderedContent = template
     ? template.content.replace(
         /{{(.*?)}}/g,
-        (_, variable) => fieldValues[variable] || `{{${variable}}}`
+        (_, variable) =>
+          `<span style="color: ${fieldValues[variable] ? "green" : "green"};">${
+            fieldValues[variable] || `{{${variable}}}`
+          }</span>`
       )
     : "";
 
@@ -58,7 +60,11 @@ function Draft() {
       </Title>
       <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md">
         <Paper shadow="sm" withBorder px={20}>
-          <div dangerouslySetInnerHTML={{ __html: renderedContent }} />
+          <div
+            dangerouslySetInnerHTML={{
+              __html: renderedContent,
+            }}
+          />
         </Paper>
         <Grid gutter="md">
           <Grid.Col>
