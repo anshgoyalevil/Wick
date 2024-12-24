@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 
 export default function Home() {
   return (
-    <Container size="lg">
+    <Container mt={-30} size="lg">
       <div className={classes.inner}>
         <div className={classes.content}>
           <Title className={classes.title}>
