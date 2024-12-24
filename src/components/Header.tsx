@@ -1,8 +1,17 @@
-import { Box, Burger, Divider, Drawer, Group, ScrollArea } from "@mantine/core";
+import {
+  Box,
+  Burger,
+  Container,
+  Divider,
+  Drawer,
+  Group,
+  ScrollArea,
+} from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import classes from "./Header.module.css";
 import { Link } from "react-router-dom";
 import ColorSchemeToggle from "./ColorSchemeToggle/ColorSchemeToggle";
+import Logo from "./Logo/Logo";
 
 export default function Header() {
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
@@ -20,38 +29,39 @@ export default function Header() {
   ));
 
   return (
-    <Box pb={120}>
-      <header className={classes.header}>
-        <Group justify="space-between" h="100%">
-          <Group h="100%" gap={0} visibleFrom="sm">
-            {items}
-
-          </Group>
+    <Container size="lg">
+      <Box pb={120}>
+        <header className={classes.header}>
+          <Group justify="space-between" h="100%">
+            <Logo />
+            <Group h="100%" gap={0} visibleFrom="sm">
+              {items}
+            </Group>
             <ColorSchemeToggle />
 
-          <Burger
-            opened={drawerOpened}
-            onClick={toggleDrawer}
-            hiddenFrom="sm"
-          />
-        </Group>
-      </header>
+            <Burger
+              opened={drawerOpened}
+              onClick={toggleDrawer}
+              hiddenFrom="sm"
+            />
+          </Group>
+        </header>
 
-      <Drawer
-        opened={drawerOpened}
-        onClose={closeDrawer}
-        size="100%"
-        padding="md"
-        title="Navigation"
-        hiddenFrom="sm"
-        zIndex={1000000}
-      >
-        <ScrollArea h="calc(100vh - 80px" mx="-md">
-          <Divider my="sm" />
-          {items}
-
-        </ScrollArea>
-      </Drawer>
-    </Box>
+        <Drawer
+          opened={drawerOpened}
+          onClose={closeDrawer}
+          size="100%"
+          padding="md"
+          title="Navigation"
+          hiddenFrom="sm"
+          zIndex={1000000}
+        >
+          <ScrollArea h="calc(100vh - 80px" mx="-md">
+            <Divider my="sm" />
+            {items}
+          </ScrollArea>
+        </Drawer>
+      </Box>
+    </Container>
   );
 }

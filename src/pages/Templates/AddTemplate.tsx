@@ -43,7 +43,7 @@ function AddTemplate() {
   };
 
   return (
-    <Container size="md">
+    <Container size="lg">
       <Title mt={-60} mb={30}>
         Add Template
       </Title>

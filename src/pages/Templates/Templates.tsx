@@ -94,7 +94,7 @@ export default function Templates() {
   ));
 
   return (
-    <Container size="md">
+    <Container size="lg">
       <Group mt={-60} mb={30}>
         <Title>Templates</Title>
         <Tooltip label="Add new template">
