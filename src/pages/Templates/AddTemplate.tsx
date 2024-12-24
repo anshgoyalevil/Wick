@@ -5,9 +5,12 @@ import { useForm } from "@mantine/form";
 import { v4 as uuidv4 } from "uuid";
 import { addTemplate } from "../../db/db";
 import { ITemplate } from "../../db/schema";
+import { useNavigate } from "react-router-dom";
 
 function AddTemplate() {
   const [templateContent, setTemplateContent] = useState("");
+
+  const navigate = useNavigate();
 
   const form = useForm({
     initialValues: {
@@ -21,7 +24,7 @@ function AddTemplate() {
       title: formValue.title,
       content: templateContent,
       variables: [] as string[],
-      dateCreated: new Date().toLocaleDateString(),
+      dateCreated: new Date().toLocaleDateString("en-GB"),
     };
 
     const extractVariables = templateContent.match(/{{(.*?)}}/g);
@@ -33,6 +36,8 @@ function AddTemplate() {
     }
 
     addTemplate(newTemplate);
+
+    navigate("/templates");
   };
 
   return (

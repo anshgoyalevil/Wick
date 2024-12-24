@@ -52,7 +52,12 @@ export default function Templates() {
       </Table.Td>
       <Table.Td>
         <Group gap={0} justify="flex-end">
-          <ActionIcon variant="subtle" color="gray">
+          <ActionIcon
+            component={Link}
+            to={`/draft/${item.id}`}
+            variant="subtle"
+            color="gray"
+          >
             <IconFileText size={16} stroke={1.5} />
           </ActionIcon>
           <ActionIcon variant="subtle" color="gray">

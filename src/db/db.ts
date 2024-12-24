@@ -7,6 +7,11 @@ export const getTemplates = () => {
   return storedItems ? JSON.parse(storedItems) : [];
 };
 
+export const getTemplate = (id: string | undefined) => {
+  const templates = getTemplates();
+  return templates.find((item: ITemplate) => item.id === id);
+};
+
 export const addTemplate = (template: ITemplate) => {
   const templates = getTemplates();
   templates.push(template);
