@@ -93,7 +93,6 @@ export default function Templates() {
           component={Link}
           to="/add-template"
           variant="subtle"
-          color="yellow"
         >
           <IconTextPlus size={80} stroke={1.5} />
         </ActionIcon>
