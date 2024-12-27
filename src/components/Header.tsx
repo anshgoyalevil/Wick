@@ -20,6 +20,7 @@ export default function Header() {
   const links = [
     { title: "Home", to: "/" },
     { title: "Templates", to: "/templates" },
+    { title: "Settings", to: "/settings" },
   ];
 
   const items = links.map((link) => (

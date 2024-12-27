@@ -1,6 +1,6 @@
 import { ITemplate } from "./schema";
 
-const storageKey = "templates";
+export const storageKey = "templates";
 
 export const getTemplates = () => {
   const storedItems = localStorage.getItem(storageKey);
@@ -31,4 +31,8 @@ export const updateTemplate = (id: string, updatedTemplate: ITemplate) => {
 export const deleteTemplate = (id: string) => {
   const templates = getTemplates().filter((item: ITemplate) => item.id !== id);
   localStorage.setItem(storageKey, JSON.stringify(templates));
+};
+
+export const clearTemplates = () => {
+  localStorage.removeItem(storageKey);
 };

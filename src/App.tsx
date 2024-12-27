@@ -8,6 +8,7 @@ import Templates from "./pages/Templates/Templates";
 import AddTemplate from "./pages/Templates/AddTemplate";
 import Draft from "./pages/Draft/Draft";
 import Edit from "./pages/Edit/Edit";
+import Settings from "./pages/Settings/Settings";
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/templates" element={<Templates />} />
+        <Route path="/settings" element={<Settings />} />
         <Route path="/add-template" element={<AddTemplate />} />
         <Route path="/draft/:id" element={<Draft />} />
         <Route path="/edit/:id" element={<Edit />} />
